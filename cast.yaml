@@ -1,0 +1,33 @@
+robots:
+  - name: optimus prime
+    faction: autobots
+    commander: true
+    subcommander: false
+  - name: megatron
+    faction: decepticons
+    commander: true
+    subcommander: false
+  - name: grimlock
+    faction: n/a
+    commander: false
+    subcommander: true
+    minions:
+      names: [slag, sludge, snarl, swoop]
+  - name: soundwave
+    faction: decepticons
+    commander: false
+    subcommander: true
+    minions:
+      names:
+        [
+          lazerbeak,
+          ravage,
+          buzzsaw,
+          ratbat,
+          rumble,
+          frenzy,
+          slugfest,
+          wingthing,
+          autoscout,
+          overkill,
+        ]

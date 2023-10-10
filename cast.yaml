@@ -8,7 +8,7 @@ robots:
     commander: true
     subcommander: false
   - name: grimlock
-    faction: n/a
+    faction: null
     commander: false
     subcommander: true
     minions:

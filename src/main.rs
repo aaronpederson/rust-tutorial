@@ -25,6 +25,7 @@ struct Command {
 enum Commands {
   Create,
   Show,
+  Download,
 }
 
 fn main() -> anyhow::Result<()> {
@@ -32,6 +33,7 @@ fn main() -> anyhow::Result<()> {
   match command.subcommand {
     Commands::Create => create(command.options),
     Commands::Show => show(command.options),
+    Commands::Download => download(command.options),
   }
 }
 
@@ -59,17 +61,65 @@ fn create(options: Options) -> anyhow::Result<()> {
   } else {
     None
   };
+  let strength = dialoguer::Input::new()
+    .with_prompt("Strength?")
+    .default(5)
+    .interact()?;
+  let intelligence = dialoguer::Input::new()
+    .with_prompt("Intelligence?")
+    .default(5)
+    .interact()?;
+  let speed = dialoguer::Input::new()
+    .with_prompt("Speed?")
+    .default(5)
+    .interact()?;
+  let endurance = dialoguer::Input::new()
+    .with_prompt("Endurance?")
+    .default(5)
+    .interact()?;
+  let rank = dialoguer::Input::new()
+    .with_prompt("Rank?")
+    .default(5)
+    .interact()?;
+  let courage = dialoguer::Input::new()
+    .with_prompt("Courage?")
+    .default(5)
+    .interact()?;
+  let firepower = dialoguer::Input::new()
+    .with_prompt("Firepower?")
+    .default(5)
+    .interact()?;
+  let skill = dialoguer::Input::new()
+    .with_prompt("Skill?")
+    .default(5)
+    .interact()?;
   let robot = Robot {
     commander,
+    courage,
+    endurance,
     faction,
+    firepower,
+    intelligence,
     name,
+    rank,
+    skill,
+    speed,
+    strength,
     subcommander,
+    ..Default::default()
   };
   let yaml = serde_yaml::to_string(&robot)?;
   match options.output_file {
-    None => println!("{yaml}"),
+    None => println!("\n{yaml}"),
     Some(filename) => std::fs::write(filename, yaml)?,
   }
+  Ok(())
+}
+
+fn download(_options: Options) -> anyhow::Result<()> {
+  let url = "https://www.ntfa.net/ntfa/techspecs/index.php?cat=Gen1&group=AutoOZ&char=Optimus_Prime";
+  let html = ureq::get(url).call()?.into_string()?;
+    println!("{html}");
   Ok(())
 }
 
